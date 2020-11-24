@@ -1,0 +1,24 @@
+  - block:
+       # Create a vault with `ovirt_password` variable which store your
+       # oVirt/RHV user's password, and include that yaml file with variable:
+     #  - ansible.builtin.include_vars: /opt/ansible_home/Lexher/Infrastruktur_labbar/vars/password.yml
+
+       - name: Obtain SSO token with using username/password credentials
+         ovirt.ovirt.ovirt_auth:
+           url: https://rhvm.lexher.infra/ovirt-engine/api
+           username: admin@internal
+           ca_file: ca.pem
+           password: "{{ rhvm_password }}"
+
+       # Previous task generated I(ovirt_auth) fact, which you can later use
+       # in different modules as follows:
+       - ovirt.ovirt.ovirt_vm:
+           auth: "{{ ovirt_auth }}"
+           state: absent
+           name: myvm
+
+    always:
+      - name: Always revoke the SSO token
+        ovirt.ovirt.ovirt_auth:
+          state: absent
+          ovirt_auth: "{{ ovirt_auth }}"

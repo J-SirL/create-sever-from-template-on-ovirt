@@ -1,0 +1,4 @@
+---
+engine_fqdn: rhvm.lexher.infra
+engine_user: admin
+engine_cafile: /etc/pki/ovirt-engine/ca.pem

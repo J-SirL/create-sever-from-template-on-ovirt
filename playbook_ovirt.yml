@@ -1,0 +1,9 @@
+---
+- name: test ovirt
+  hosts: localhost
+  connection: local
+  vars_files:
+    - /opt/ansible_home/Lexher/Infrastruktur_labbar/vars/password.yml
+  tasks:
+    - import_tasks: ovirt_login.yml
+
