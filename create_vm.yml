@@ -11,7 +11,7 @@
   pre_tasks:
     - name: Login to oVirt
       ovirt.ovirt.ovirt_auth:
-        hostname: "{{ rhvm_fqdn }}"
+        hostname: "{{ rhvm_fqdn }}/ovirt-engine/api"
         username: "{{ rhvm_user }}"
         password: "{{ rhvm_password }}"
         ca_file: "{{ rhvm_cafile | default(omit) }}"
