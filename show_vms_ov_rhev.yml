@@ -1,0 +1,20 @@
+  - hosts: localhost
+    gather_facts: no
+
+    tasks:
+      - name: Login to oVirt
+        ovirt_auth:
+          url: https://rhvm.lexher.infra/ovirt-engine/api
+          username: admin@internal
+          password: "{{ rhvm_password }}"
+          insecure: yes
+  
+      - name: Gather info on all the virtual machines
+        ovirt_vm_info:
+          auth: "{{ ovirt_auth }}"
+          pattern: "cluster=Default"  # Get VMs from cluster "Default"
+        register: vms
+  
+      - name: Print the gathered info
+        debug:
+          var: vms.ovirt_vms
