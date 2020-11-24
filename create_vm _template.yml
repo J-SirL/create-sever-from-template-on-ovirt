@@ -23,7 +23,7 @@
     datacenter: Default
     cluster: Default
     #template: "RHEL8.3-Template"
-    vm_memory: 1GiB
+    vm_memory: 4GiB
     vm_name: test-vm01
 
 
