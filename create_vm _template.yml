@@ -38,6 +38,9 @@
       high_availability: no
       state: present
       wait: yes
+      cloud_init:
+         host_name: "{{ vm_name }}"
+
 
   post_tasks:
     - name: Logout from oVirt
