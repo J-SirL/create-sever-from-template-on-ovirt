@@ -11,7 +11,7 @@
   pre_tasks:
     - name: Login to oVirt
       ovirt_auth:
-        hostname: "{{ engine_fqdn }}/ovirt-engine/api"
+        url: "{{ engine_fqdn }}/ovirt-engine/api"
         username: "{{ engine_user }}"
         password: "{{ engine_password }}"
         ca_file: "{{ engine_cafile | default(omit) }}"
