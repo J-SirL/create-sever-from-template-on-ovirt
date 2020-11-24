@@ -1,0 +1,48 @@
+---
+- name: Create VM on RHV
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  #vars_files:
+  #  - vars/rhv_vars.yml
+  #  - vars/password.yml
+
+  pre_tasks:
+    - name: Login to oVirt
+      ovirt_auth:
+        url: "https://{{ engine_fqdn }}/ovirt-engine/api"
+        username: "{{ engine_user }}"
+        password: "{{ engine_password }}"
+        ca_file: "{{ engine_cafile | default(omit) }}"
+        insecure: "{{ rhvm_insecure | default(true) }}"
+      tags:
+        - always
+
+  vars:
+    datacenter: Default
+    cluster: Default
+    #template: "RHEL8.3-Template"
+    vm_memory: 1GiB
+    vm_name: test-vm01
+
+
+  tasks:
+  - name: Create and run VM from template
+    ovirt_vm:
+      auth: "{{ ovirt_auth }}"
+      name: "{{ vm_name }}"
+      template: "{{ template }}"
+      cluster: "{{ cluster }}"
+      memory: "{{vm_memory}}"
+      high_availability: no
+      state: present
+      wait: yes
+
+  post_tasks:
+    - name: Logout from oVirt
+      ovirt_auth:
+        state: absent
+        ovirt_auth: "{{ ovirt_auth }}"
+      tags:
+       - always
