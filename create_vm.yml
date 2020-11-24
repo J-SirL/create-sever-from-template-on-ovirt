@@ -10,7 +10,7 @@
 
   pre_tasks:
     - name: Login to oVirt
-      ovirt.ovirt.ovirt_auth:
+      ovirt_auth:
         hostname: "{{ rhvm_fqdn }}/ovirt-engine/api"
         username: "{{ rhvm_user }}"
         password: "{{ rhvm_password }}"
@@ -29,7 +29,7 @@
 
   tasks:
   - name: Create and run VM from template
-    ovirt.ovirt.ovirt_vms:
+    ovirt_vms:
       auth: "{{ ovirt_auth }}"
       name: "{{ vm_name }}"
       template: "{{ template }}"
@@ -41,7 +41,7 @@
 
   post_tasks:
     - name: Logout from oVirt
-      ovirt.ovirt.ovirt_auth:
+      ovirt_auth:
         state: absent
         ovirt_auth: "{{ ovirt_auth }}"
       tags:
