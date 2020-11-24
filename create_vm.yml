@@ -4,9 +4,9 @@
   connection: local
   gather_facts: false
 
-  vars_files:
-    - vars/rhv_vars.yml
-    - vars/password.yml
+  #vars_files:
+  #  - vars/rhv_vars.yml
+  #  - vars/password.yml
 
   pre_tasks:
     - name: Login to oVirt
