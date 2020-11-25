@@ -1,0 +1,11 @@
+---
+- name: debug vault-id jsvault
+  hosts: localhost
+  connection: local
+  vars_files:
+  - vars/jsvault.yaml
+  tasks:
+  - name: debug vault-id in var file
+    debug:
+      vars: "{{testing_vault}}"
+     
