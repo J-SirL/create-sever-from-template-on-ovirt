@@ -1,14 +1,16 @@
   - hosts: localhost
     gather_facts: no
-
-    tasks:
+    pre_tasks:
       - name: Login to oVirt
         ovirt_auth:
-          url: https://rhvm.lexher.infra/ovirt-engine/api
-          username: admin@internal
+          url: "https://{{ engine_fqdn }}/ovirt-engine/api"
+          username: "{{ engine_user }}"
           password: "{{ engine_password }}"
-          insecure: yes
-  
+          ca_file: "{{ engine_cafile | default(omit) }}"
+          insecure: "{{ engine_insecure | default(true) }}"
+
+    tasks:
+
       - name: Gather info on all the virtual machines
         ovirt_vm_info:
           auth: "{{ ovirt_auth }}"
@@ -18,3 +20,9 @@
       - name: Print the gathered info
         debug:
           var: vms.ovirt_vms
+
+    post_tasks:
+      - name: Logout from oVirt
+        ovirt_auth:
+          state: absent
+          ovirt_auth: "{{ ovirt_auth }}"
