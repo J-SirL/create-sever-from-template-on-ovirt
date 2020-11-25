@@ -17,7 +17,7 @@
         username: "{{ engine_user }}"
         password: "{{ engine_password }}"
         ca_file: "{{ engine_cafile | default(omit) }}"
-        insecure: "{{ rhvm_insecure | default(true) }}"
+        insecure: "{{ engine_insecure | default(true) }}"
       tags:
         - always
 
