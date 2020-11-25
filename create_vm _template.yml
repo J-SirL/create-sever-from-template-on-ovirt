@@ -35,8 +35,10 @@
       template: "{{ template }}"
       cluster: "{{ cluster }}"
       memory: "{{vm_memory}}"
-      high_availability: no
-      state: present
+      ballooning_enabled: "{{ vm_ballooning_enabled }}"
+      high_availability: "{{ vm_availability }}"
+      memory_guaranteed: "{{ memory_guaranteed }}"
+      state: running
       wait: yes
       cloud_init:
          host_name: "{{ vm_name }}"
