@@ -37,7 +37,7 @@
       memory: "{{vm_memory}}"
       ballooning_enabled: "{{ vm_ballooning_enabled }}"
       high_availability: "{{ vm_availability }}"
-      memory_guaranteed: "{{ memory_guaranteed }}"
+      memory_guaranteed: "{{ vm_memory_guaranteed }}"
       state: running
       wait: yes
       cloud_init:
