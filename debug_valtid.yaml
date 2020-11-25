@@ -3,7 +3,7 @@
   hosts: localhost
   connection: local
   vars_files:
-  - vars/jsvault.yaml
+  - vars/jsvault.yml
   tasks:
   - name: debug vault-id in var file
     debug:
