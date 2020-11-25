@@ -12,7 +12,9 @@
         #the location of the ca.pem file
         engine_cafile: /etc/pki/ovirt-engine/ca.pem  
         #engine_password is encrypted in a varsfile with ansible-vault
-        engine_password: 
+        engine_password:
+        # set insecure yes | no 
+        engine_insecure:
     
     # The variables to create the vm
         #template name to use
@@ -21,9 +23,9 @@
         vm_memory: 4GiB
         #The vm's name 
         vm_name: vm-001.yourdomain.domain
-        #Do you like to use the ballooning fuction
+        #enable ballooning yes | no
         vm_ballooning_enabled: yes
-        #Should it use high availability 
+        #enable high availability yes | no 
         vm_high_availability: yes
 
 
