@@ -23,14 +23,25 @@
         engine_insecure:
 
     # The variables to create the vm
+
+        #select datacenter to use
+        ovirt_datacenter: Default
+
+        #select cluster to use 
+        ovirt_cluster: Default
+
         #template name to use
-        template: rhel83  
+        ovirt_template: rhel83  
+
         #the amount of memory of server
         vm_memory: 4GiB
+
         #The vm's name 
         vm_name: vm-001.yourdomain.domain
+
         #enable ballooning yes | no
         vm_ballooning_enabled: yes
+
         #enable high availability yes | no
         vm_high_availability: yes
 
