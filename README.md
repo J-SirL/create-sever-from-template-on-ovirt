@@ -32,3 +32,10 @@
         #enable high availability yes | no
         vm_high_availability: yes
 
+- deploy_git_vm.yml
+
+```yaml
+
+  #extra variables that are defined in deploy_git_vm.yml playbook is:
+  # set disk size defaut value is 100GiB
+  vm_disk_size:
