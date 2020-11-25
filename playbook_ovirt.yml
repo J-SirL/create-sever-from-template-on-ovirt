@@ -1,9 +1,0 @@
----
-- name: test ovirt
-  hosts: localhost
-  connection: local
-  vars_files:
-    - vars/password.yml
-  tasks:
-    - import_tasks: ovirt_login.yml
-

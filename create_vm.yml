@@ -2,6 +2,8 @@
 - name: Create VM on RHV
   hosts: localhost
   connection: local
+  vars_files:
+    vars/jsvault.yml
   gather_facts: false
 
   #vars_files:
@@ -11,11 +13,11 @@
   pre_tasks:
     - name: Login to oVirt
       ovirt_auth:
-        url: "{{ engine_fqdn }}/ovirt-engine/api"
+        url: "https://{{ engine_fqdn }}/ovirt-engine/api"
         username: "{{ engine_user }}"
         password: "{{ engine_password }}"
         ca_file: "{{ engine_cafile | default(omit) }}"
-        insecure: "{{ rhvm_insecure | default(true) }}"
+        insecure: "{{ engine_insecure | default(true) }}"
       tags:
         - always
 
@@ -23,8 +25,8 @@
     datacenter: Default
     cluster: Default
     #template: "RHEL8.3-Template"
-    vm_memory: 1GiB
-    vm_name: test-vm01
+    #vm_memory: 4GiB
+    #vm_name: test-vm01
 
 
   tasks:
@@ -35,9 +37,14 @@
       template: "{{ template }}"
       cluster: "{{ cluster }}"
       memory: "{{vm_memory}}"
-      high_availability: true
-      state: present
+      ballooning_enabled: "{{ vm_ballooning_enabled }}"
+      high_availability: "{{ vm_high_availability }}"
+      memory_guaranteed: "{{vm_memory}}"
+      state: running
       wait: yes
+      cloud_init:
+         host_name: "{{ vm_name }}"
+
 
   post_tasks:
     - name: Logout from oVirt

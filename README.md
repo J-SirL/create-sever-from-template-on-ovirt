@@ -1,8 +1,10 @@
 # create-sever-from-template-on-ovirt 
+# Branch - sitedevelopments.net
+# By Johan Sörell www.sitedevelopments.net
 
 ## This git repository's Playbooks
 
-- create_vm _template.yml 
+- create_vm.yml 
 
     Variables that are used:
 
