@@ -2,6 +2,8 @@
 - name: Create VM on RHV
   hosts: localhost
   connection: local
+  vars_files:
+    vars/jsvault.yml
   gather_facts: false
 
   #vars_files:
