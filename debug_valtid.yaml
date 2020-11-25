@@ -7,5 +7,5 @@
   tasks:
   - name: debug vault-id in var file
     debug:
-      var: "{{testing_vault}}"
+      msg: "{{ testing_vault }}"
      
