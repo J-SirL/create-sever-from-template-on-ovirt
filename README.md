@@ -1,10 +1,14 @@
-# create-sever-from-template-on-ovirt
-## This git repository's Playbooks 
+# create-sever-from-template-on-ovirt 
+
+## This git repository's Playbooks
+
 - create_vm _template.yml 
 
     Variables that are used:
+
     ```yaml
-    # variables for the hosted-engine connection 
+
+    # variables for the hosted-engine connection
         #engine_fqdn the fqdn of hosted-engine
         engine_fqdn: hosted-engine.yourdomain.domain
         #username for the hosted-engine
@@ -13,9 +17,9 @@
         engine_cafile: /etc/pki/ovirt-engine/ca.pem  
         #engine_password is encrypted in a varsfile with ansible-vault
         engine_password:
-        # set insecure yes | no 
+        # set insecure yes | no
         engine_insecure:
-    
+
     # The variables to create the vm
         #template name to use
         template: rhel83  
@@ -25,10 +29,6 @@
         vm_name: vm-001.yourdomain.domain
         #enable ballooning yes | no
         vm_ballooning_enabled: yes
-        #enable high availability yes | no 
+        #enable high availability yes | no
         vm_high_availability: yes
-
-
-
----
 
