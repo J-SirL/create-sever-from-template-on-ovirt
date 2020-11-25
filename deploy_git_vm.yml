@@ -29,13 +29,22 @@
          host_name: "{{ vm_name }}"
     register: vm_created
 
-  # Create and attach new disk to "{{ vm_name }}"
+  # Create and attach new datadisk to "{{ vm_name }}"
   - ovirt_disks:
       name: "{{ vm_name }}_data01"
       vm_name: "{{ vm_name }}"
-      size: 10GiB "{{ vm_disk_size | default('100GiB') }}"
+      size: "{{ vm_disk_size | default('100GiB') }}"
       format: cow
-      interface: virtio
+      interface: virtio_scsi
+    when: vm_created.changed
+
+  # Create and attach new disk to "{{ vm_name }}"
+  - ovirt_disks:
+      name: "{{ vm_name }}_backup01"
+      vm_name: "{{ vm_name }}"
+      size: "{{ vm_disk_size | default('100GiB') }}"
+      format: cow
+      interface: virtio_scsi
     when: vm_created.changed
 
   post_tasks:
