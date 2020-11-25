@@ -22,9 +22,9 @@
         - always
 
   vars:
-    datacenter: Default
-    cluster: Default
-    #template: "RHEL8.3-Template"
+    ovirt_datacenter: Default
+    ovirt_cluster: Default
+    #ovirt_template: "RHEL8.3-Template"
     #vm_memory: 4GiB
     #vm_name: test-vm01
 
@@ -34,9 +34,9 @@
     ovirt_vm:
       auth: "{{ ovirt_auth }}"
       name: "{{ vm_name }}"
-      template: "{{ template }}"
-      cluster: "{{ cluster }}"
-      memory: "{{vm_memory}}"
+      template: "{{ ovirt_template }}"
+      cluster: "{{ ovirt_cluster }}"
+      memory: "{{ vm_memory }}"
       ballooning_enabled: "{{ vm_ballooning_enabled }}"
       high_availability: "{{ vm_high_availability }}"
       memory_guaranteed: "{{vm_memory}}"
@@ -51,5 +51,3 @@
       ovirt_auth:
         state: absent
         ovirt_auth: "{{ ovirt_auth }}"
-      tags:
-       - always
