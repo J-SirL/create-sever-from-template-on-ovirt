@@ -10,4 +10,4 @@
 
   - name: Output disks
     debug:
-      var: hostvars[inventory_hostname].ansible_devices.keys() | list
+      var: hostvars[inventory_hostname].ansible_devices.keys('sdb') | list
