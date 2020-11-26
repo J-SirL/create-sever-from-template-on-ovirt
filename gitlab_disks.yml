@@ -1,6 +1,6 @@
 ---
 - name: format disks for data and backup
-  hosts: gitlab-test
+  hosts: gitlab_test
   gather_facts: false
   tasks:
   - name: Collect only facts about disks
