@@ -19,7 +19,7 @@
       name: "{{ vm_name }}"
       template: "{{ vm_template }}"
       cluster: "{{ engine_cluster }}"
-      datacenter: "{{ engine_datacenter }}"
+      # not in this version of the module datacenter: "{{ engine_datacenter }}"
       memory: "{{vm_memory}}"
       ballooning_enabled: "{{ vm_ballooning_enabled }}"
       high_availability: "{{ vm_high_availability }}"
