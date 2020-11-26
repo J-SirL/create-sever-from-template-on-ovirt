@@ -17,8 +17,9 @@
     ovirt_vm:
       auth: "{{ ovirt_auth }}"
       name: "{{ vm_name }}"
-      template: "{{ template }}"
-      cluster: "{{ cluster }}"
+      template: "{{ vm_template }}"
+      cluster: "{{ engine_cluster }}"
+      datacenter: "{{ engine_datacenter }}"
       memory: "{{vm_memory}}"
       ballooning_enabled: "{{ vm_ballooning_enabled }}"
       high_availability: "{{ vm_high_availability }}"
