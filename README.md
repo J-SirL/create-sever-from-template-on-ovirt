@@ -43,4 +43,6 @@
   #extra variables that are defined in deploy_git_vm.yml playbook is:
   # set disk size defaut value is 100GiB
   vm_disk_size:
-  vm_storage_domain: 
+  vm_storage_domain:
+  vm_disk_description_data:
+  vm_disk_description_backup:
