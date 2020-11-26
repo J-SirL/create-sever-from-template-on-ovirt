@@ -30,7 +30,7 @@
     register: vm_created
 
   # Create and attach new datadisk to "{{ vm_name }}"
-  - ovirt_disks:
+  - ovirt_disk:
       name: "{{ vm_name }}_data01"
       vm_name: "{{ vm_name }}"
       size: "{{ vm_disk_size | default('100GiB') }}"
@@ -39,7 +39,7 @@
     when: vm_created.changed
 
   # Create and attach new disk to "{{ vm_name }}"
-  - ovirt_disks:
+  - ovirt_disk:
       name: "{{ vm_name }}_backup01"
       vm_name: "{{ vm_name }}"
       size: "{{ vm_disk_size | default('100GiB') }}"
