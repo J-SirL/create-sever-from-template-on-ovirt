@@ -19,7 +19,6 @@
       name: "{{ vm_name }}"
       template: "{{ vm_template }}"
       cluster: "{{ engine_cluster }}"
-      # not in this version of the module datacenter: "{{ engine_datacenter }}"
       memory: "{{vm_memory}}"
       ballooning_enabled: "{{ vm_ballooning_enabled }}"
       high_availability: "{{ vm_high_availability }}"
@@ -36,6 +35,7 @@
       name: "{{ vm_name }}_data01"
       vm_name: "{{ vm_name }}"
       size: "{{ vm_disk_size | default('100GiB') }}"
+      storage_domain: "{{ vm_storage_domain }}"
       format: cow
       interface: virtio_scsi
     when: vm_created.changed
@@ -46,6 +46,7 @@
       name: "{{ vm_name }}_backup01"
       vm_name: "{{ vm_name }}"
       size: "{{ vm_disk_size | default('100GiB') }}"
+      storage_domain: "{{ vm_storage_domain }}"
       format: cow
       interface: virtio_scsi
     when: vm_created.changed
