@@ -1,6 +1,6 @@
 ---
 - name: format disks for data and backup
-  hosts: gitlab-test.lexher.infra
+  hosts: gitlab-test
   gather_facts: false
   tasks:
   - name: Collect only facts about disks
