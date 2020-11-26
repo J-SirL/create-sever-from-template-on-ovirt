@@ -22,11 +22,15 @@
 
     # The variables to create the vm
         #template name to use
-        template: rhel83  
+        vm_template: rhel83  
         #the amount of memory of server
         vm_memory: 4GiB
         #The vm's name 
         vm_name: vm-001.yourdomain.domain
+        #The cluster to deploy too
+        engine_cluster:  Default
+        #The datacenter to use
+        engine_datacenter: Default
         #enable ballooning yes | no
         vm_ballooning_enabled: yes
         #enable high availability yes | no
