@@ -32,6 +32,7 @@
 
   # Create and attach new datadisk to "{{ vm_name }}"
   - ovirt_disk:
+      auth: "{{ ovirt_auth }}"
       name: "{{ vm_name }}_data01"
       vm_name: "{{ vm_name }}"
       size: "{{ vm_disk_size | default('100GiB') }}"
@@ -41,6 +42,7 @@
 
   # Create and attach new disk to "{{ vm_name }}"
   - ovirt_disk:
+      auth: "{{ ovirt_auth }}"
       name: "{{ vm_name }}_backup01"
       vm_name: "{{ vm_name }}"
       size: "{{ vm_disk_size | default('100GiB') }}"
