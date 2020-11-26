@@ -34,10 +34,12 @@
       auth: "{{ ovirt_auth }}"
       name: "{{ vm_name }}_data01"
       vm_name: "{{ vm_name }}"
+      description: "{{ vm_disk_description_data }}"
       size: "{{ vm_disk_size | default('100GiB') }}"
       storage_domain: "{{ vm_storage_domain }}"
       format: cow
       interface: virtio_scsi
+      state: attached
     when: vm_created.changed
 
   # Create and attach new disk to "{{ vm_name }}"
@@ -45,10 +47,12 @@
       auth: "{{ ovirt_auth }}"
       name: "{{ vm_name }}_backup01"
       vm_name: "{{ vm_name }}"
+      description: "{{ vm_disk_description_backup }}"
       size: "{{ vm_disk_size | default('100GiB') }}"
       storage_domain: "{{ vm_storage_domain }}"
       format: cow
       interface: virtio_scsi
+      state: attached
     when: vm_created.changed
 
   post_tasks:
