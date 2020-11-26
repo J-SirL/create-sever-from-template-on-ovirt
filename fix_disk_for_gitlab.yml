@@ -1,0 +1,268 @@
+EXAMPLES:
+
+- name: Create a new primary partition
+  parted:
+    device: /dev/sdb
+    number: 1
+    state: present
+
+- name: Remove partition number 1
+  parted:
+    device: /dev/sdb
+    number: 1
+    state: absent
+
+- name: Create a new primary partition with a size of 1GiB
+  parted:
+    device: /dev/sdb
+    number: 1
+    state: present
+    part_end: 1GiB
+
+- name: Create a new primary partition for LVM
+  parted:
+    device: /dev/sdb
+    number: 2
+    flags: [ lvm ]
+    state: present
+    part_start: 1GiB
+
+# Example on how to read info and reuse it in subsequent task
+- name: Read device information (always use unit when probing)
+  parted: device=/dev/sdb unit=MiB
+  register: sdb_info
+
+- name: Remove all partitions from disk
+  parted:
+    device: /dev/sdb
+    number: '{{ item.num }}'
+    state: absent
+  loop: '{{ sdb_info.partitions }}'
+
+
+RETURN VALUES:
+
+partition_info:
+  description: Current partition information
+  returned: success
+  type: complex
+  contains:
+    device:
+      description: Generic device information.
+      type: dict
+    partitions:
+      description: List of device partitions.
+      type: list
+  sample: {
+      "disk": {
+        "dev": "/dev/sdb",
+        "logical_block": 512,
+        "model": "VMware Virtual disk",
+        "physical_block": 512,
+        "size": 5.0,
+        "table": "msdos",
+        "unit": "gib"
+      },
+      "partitions": [{
+        "begin": 0.0,
+        "end": 1.0,
+        "flags": ["boot", "lvm"],
+        "fstype": "",
+        "name": "",
+        "num": 1,
+        "size": 1.0
+      }, {
+        "begin": 1.0,
+        "end": 5.0,
+        "flags": [],
+        "fstype": "",
+        "name": "",
+        "num": 2,
+        "size": 4.0
+      }]
+    }
+
+EXAMPLES:
+
+- name: Create a volume group on top of /dev/sda1 with physical extent size = 32MB
+  lvg:
+    vg: vg.services
+    pvs: /dev/sda1
+    pesize: 32
+
+- name: Create a volume group on top of /dev/sdb with physical extent size = 128KiB
+  lvg:
+    vg: vg.services
+    pvs: /dev/sdb
+    pesize: 128K
+
+# If, for example, we already have VG vg.services on top of /dev/sdb1,
+# this VG will be extended by /dev/sdc5.  Or if vg.services was created on
+# top of /dev/sda5, we first extend it with /dev/sdb1 and /dev/sdc5,
+# and then reduce by /dev/sda5.
+- name: Create or resize a volume group on top of /dev/sdb1 and /dev/sdc5.
+  lvg:
+    vg: vg.services
+    pvs: /dev/sdb1,/dev/sdc5
+
+- name: Remove a volume group with name vg.services
+  lvg:
+    vg: vg.services
+    state: absent
+
+
+EXAMPLES:
+
+- name: Create a logical volume of 512m
+  lvol:
+    vg: firefly
+    lv: test
+    size: 512
+
+- name: Create a logical volume of 512m with disks /dev/sda and /dev/sdb
+  lvol:
+    vg: firefly
+    lv: test
+    size: 512
+    pvs: /dev/sda,/dev/sdb
+
+- name: Create cache pool logical volume
+  lvol:
+    vg: firefly
+    lv: lvcache
+    size: 512m
+    opts: --type cache-pool
+
+- name: Create a logical volume of 512g.
+  lvol:
+    vg: firefly
+    lv: test
+    size: 512g
+
+- name: Create a logical volume the size of all remaining space in the volume group
+  lvol:
+    vg: firefly
+    lv: test
+    size: 100%FREE
+
+- name: Create a logical volume with special options
+  lvol:
+    vg: firefly
+    lv: test
+    size: 512g
+    opts: -r 16
+
+- name: Extend the logical volume to 1024m.
+  lvol:
+    vg: firefly
+    lv: test
+    size: 1024
+
+- name: Extend the logical volume to consume all remaining space in the volume group
+  lvol:
+    vg: firefly
+    lv: test
+    size: +100%FREE
+
+- name: Extend the logical volume to take all remaining space of the PVs and resize the underlying filesystem
+  lvol:
+    vg: firefly
+    lv: test
+    size: 100%PVS
+    resizefs: true
+
+- name: Resize the logical volume to % of VG
+  lvol:
+    vg: firefly
+    lv: test
+    size: 80%VG
+    force: yes
+
+- name: Reduce the logical volume to 512m
+  lvol:
+    vg: firefly
+    lv: test
+    size: 512
+    force: yes
+
+- name: Set the logical volume to 512m and do not try to shrink if size is lower than current one
+  lvol:
+    vg: firefly
+    lv: test
+    size: 512
+    shrink: no
+
+- name: Remove the logical volume.
+  lvol:
+    vg: firefly
+    lv: test
+    state: absent
+    force: yes
+
+- name: Create a snapshot volume of the test logical volume.
+  lvol:
+    vg: firefly
+    lv: test
+    snapshot: snap1
+    size: 100m
+
+- name: Deactivate a logical volume
+  lvol:
+    vg: firefly
+    lv: test
+    active: false
+
+EXAMPLES:
+
+- name: Create a ext2 filesystem on /dev/sdb1
+  filesystem:
+    fstype: ext2
+    dev: /dev/sdb1
+
+- name: Create a ext4 filesystem on /dev/sdb1 and check disk blocks
+  filesystem:
+    fstype: ext4
+    dev: /dev/sdb1
+    opts: -cc
+
+
+EXAMPLES:
+
+# Before 2.3, option 'name' was used instead of 'path'
+- name: Mount DVD read-only
+  mount:
+    path: /mnt/dvd
+    src: /dev/sr0
+    fstype: iso9660
+    opts: ro,noauto
+    state: present
+
+- name: Mount up device by label
+  mount:
+    path: /srv/disk
+    src: LABEL=SOME_LABEL
+    fstype: ext4
+    state: present
+
+- name: Mount up device by UUID
+  mount:
+    path: /home
+    src: UUID=b3e48f45-f933-4c8e-a700-22a159ec9077
+    fstype: xfs
+    opts: noatime
+    state: present
+
+- name: Unmount a mounted volume
+  mount:
+    path: /tmp/mnt-pnt
+    state: unmounted
+
+- name: Mount and bind a volume
+  mount:
+    path: /system/new_volume/boot
+    src: /boot
+    opts: bind
+    state: mounted
+    fstype: none
+
+
