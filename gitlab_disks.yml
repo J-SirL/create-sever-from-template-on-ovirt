@@ -1,0 +1,13 @@
+---
+- name: format disks for data and backup
+  hosts: gitlab-test
+  gather_facts: false
+  tasks:
+  - name: Collect only facts about disks
+    setup:
+      gather_subset:
+      - hardware
+
+  - name: Output disks
+    debug:
+      var: hostvars[inventory_hostname].ansible_devices.keys() | list
