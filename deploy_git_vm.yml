@@ -26,7 +26,13 @@
       state: running
       wait: yes
       cloud_init:
-         host_name: "{{ vm_name }}"
+        host_name: "{{ vm_name }}"
+        dns_servers: '192.168.120.208'
+        nic_boot_protocol: static
+        nic_ip_address: 192.168.160.35
+        nic_netmask: 255.255.240.0
+        nic_gateway: 192.168.120.208
+        nic_name: eth0
     register: vm_created
 
   # Create and attach new datadisk to "{{ vm_name }}"
