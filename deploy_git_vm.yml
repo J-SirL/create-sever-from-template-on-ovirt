@@ -38,9 +38,9 @@
   # Create and attach new datadisk to "{{ vm_name }}"
   - ovirt_disk:
       auth: "{{ ovirt_auth }}"
-      name: "{{ vm_name }}_data01"
+      name: "{{ vm_name | replace('.', '_') }}_data01"
       vm_name: "{{ vm_name }}"
-      description: "{{ vm_disk_description_data }}"
+      description: "{{ vm_disk_description_data | default('Data disk') }}"
       size: "{{ vm_disk_size | default('100GiB') }}"
       storage_domain: "{{ vm_storage_domain }}"
       format: cow
@@ -51,9 +51,9 @@
   # Create and attach new disk to "{{ vm_name }}"
   - ovirt_disk:
       auth: "{{ ovirt_auth }}"
-      name: "{{ vm_name }}_backup01"
+      name: "{{ vm_name | replace('.','_')}}_backup01"
       vm_name: "{{ vm_name }}"
-      description: "{{ vm_disk_description_backup }}"
+      description: "{{ vm_disk_description_backup | default('Backup Disk') }}"
       size: "{{ vm_disk_size | default('100GiB') }}"
       storage_domain: "{{ vm_storage_domain }}"
       format: cow
