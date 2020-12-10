@@ -2,7 +2,7 @@
 - name: deploy gitlab vm
   hosts: localhost
   connection: local
-  vars_files:
+  #vars_files:
    # vars/jsvault.yml
   pre_tasks:
     - name: Login to oVirt
