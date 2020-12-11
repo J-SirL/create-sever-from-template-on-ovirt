@@ -44,6 +44,7 @@
       wait: yes
       cloud_init:
          host_name: "{{ vm_name }}"
+      register: vm_created
 
 
   post_tasks:
